@@ -21,7 +21,7 @@ async def get_tags(debug_answer: UserProfile, cookie: str, time_range: Optional[
     response = UserProfile(cookie=cookie, views=views[:limit], buys=buys[:limit])
     logger.info(f"{cookie} {time_range} {limit}")
     logger.info(f"Expected answer:\n{debug_answer.json()}")
-    logger.info(f"Sent answer:\n{response}")
+    logger.info(f"Sent answer:\n{response.json()}")
     return response
 
 

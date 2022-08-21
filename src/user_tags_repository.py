@@ -59,7 +59,7 @@ class UserTagsRepository:
             result = [tag for tag in result if tag.time >= time_start]
         if time_end:
             result = [tag for tag in result if tag.time <= time_end]
-        return result
+        return list(reversed(result))
 
     def add_user_tag(self, tag: UserTag):
         with self.redis.lock(name=f"user|{tag.cookie}|{tag.action}_lock", timeout=10):

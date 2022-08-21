@@ -1,3 +1,4 @@
+import logging
 from typing import Union, Optional
 
 from fastapi import FastAPI
@@ -8,8 +9,8 @@ from user_tags_repository import UserTagsRepository
 
 app = FastAPI()
 
+logger = logging.getLogger(__name__)
 tags_repository = UserTagsRepository()
-
 
 @app.post("/user_profiles{cookie}")
 async def get_tags(cookie: str, time_range: Optional[str], limit: Optional[int]):
@@ -27,3 +28,4 @@ async def get_tags(cookie: str, time_range: Optional[str], limit: Optional[int])
 @app.post("/user_tags", status_code=HTTP_204_NO_CONTENT)
 async def add_tag(user_tag: UserTag):
     tags_repository.add_user_tag(tag=user_tag)
+    logger.info(user_tag.json())

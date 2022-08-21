@@ -1,7 +1,19 @@
 FROM python:3.10.5-bullseye
 
-WORKDIR /app
 
 EXPOSE 8000
 
-copy . .
+# to invalidate docker cache
+ADD http://worldclockapi.com/api/json/utc/now /etc/builddate
+
+RUN git init
+
+RUN git clone https://github.com/tomg10/mimuw-allezon.git
+
+WORKDIR /mimuw-allezon
+
+RUN pip install -r requirements.txt
+
+WORKDIR /mimuw-allezon/src
+
+CMD  uvicorn main_app:app --workers 2 --host 0.0.0.0 --port 8080

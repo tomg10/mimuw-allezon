@@ -23,7 +23,7 @@ def single_worker_write(cookie_id):
 
     for _ in range(ops_count):
         action = generate_tag(cookie=cookies[cookie_id], action="VIEW")
-        requests.post('http://localhost:8000/user_tags', json=action.dict()).raise_for_status()
+        requests.post('http://localhost:8080/user_tags', json=action.dict()).raise_for_status()
     return datetime.datetime.now() - start_time
 
 

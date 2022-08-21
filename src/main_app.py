@@ -14,8 +14,8 @@ tags_repository = UserTagsRepository()
 
 @app.post("/user_profiles/{cookie}")
 async def get_tags(debug_answer: UserProfile, cookie: str, time_range: Optional[str], limit: Optional[int]):
-    time_start = None if not time_range else time_range.split("_")[1]
-    time_end = None if not time_range else time_range.split("_")[0]
+    time_start = None if not time_range else time_range.split("_")[0]
+    time_end = None if not time_range else time_range.split("_")[1]
     views = tags_repository.get_user_tags(cookie=cookie, action="VIEW", time_start=time_start, time_end=time_end)
     buys = tags_repository.get_user_tags(cookie=cookie, action="BUY", time_start=time_start, time_end=time_end)
     response = UserProfile(cookie=cookie, views=views[:limit], buys=buys[:limit])

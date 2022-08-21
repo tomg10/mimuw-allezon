@@ -1,9 +1,11 @@
 import logging
-from typing import Union, Optional
+from typing import Union, Optional, Callable
 
 from fastapi import FastAPI
+from fastapi.routing import APIRoute
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
 from starlette.requests import Request
+from starlette.responses import Response
 from starlette.status import HTTP_204_NO_CONTENT
 from starlette.types import Message
 
@@ -15,26 +17,20 @@ app = FastAPI()
 logger = logging.getLogger("uvicorn")
 tags_repository = UserTagsRepository()
 
-class RequestContextLogMiddleware(BaseHTTPMiddleware):
+class RequestLogger(APIRoute):
+    def get_route_handler(self) -> Callable:
+        original_route_handler = super().get_route_handler()
 
-    async def set_body(self, request: Request):
-        receive_ = await request._receive()
+        async def custom_route_handler(request: Request) -> Response:
+            req = await request.body()
+            logger.info(f"Request body\n:{req}")
+            response: Response = await original_route_handler(request)
+            logger.info(f"Response body:\n: {response.body}")
+            return response
 
-        async def receive() -> Message:
-            return receive_
+        return custom_route_handler
 
-        request._receive = receive
-
-    async def dispatch(self, request: Request, call_next: RequestResponseEndpoint):
-        await self.set_body(request)
-        body = await request.body()
-        jsonbody = await request.json()
-        logger.info(body)
-        id_ = jsonbody['external_id']
-        response = await call_next(request)
-        return response
-
-
+app.router.route_class = RequestLogger
 
 @app.post("/user_profiles/{cookie}")
 async def get_tags(debug_answer: UserProfile, cookie: str, time_range: Optional[str], limit: Optional[int]):
@@ -53,3 +49,4 @@ async def get_tags(debug_answer: UserProfile, cookie: str, time_range: Optional[
 async def add_tag(user_tag: UserTag):
     tags_repository.add_user_tag(tag=user_tag)
     logger.info(user_tag.json())
+

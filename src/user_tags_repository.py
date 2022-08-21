@@ -3,7 +3,7 @@ from typing import List, Optional
 
 import redis
 
-from src.schema import UserTag, ProductInfo
+from schema import UserTag, ProductInfo
 
 
 class UserTagsRepository:

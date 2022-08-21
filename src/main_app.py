@@ -27,5 +27,6 @@ async def get_tags(cookie: str, time_range: Optional[str], limit: Optional[int])
 
 @app.post("/user_tags", status_code=HTTP_204_NO_CONTENT)
 async def add_tag(user_tag: UserTag):
+    raise Exception("A")
     tags_repository.add_user_tag(tag=user_tag)
     logger.info(user_tag.json())

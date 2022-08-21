@@ -58,7 +58,7 @@ class UserTagsRepository:
         if time_start:
             result = [tag for tag in result if tag.time >= time_start]
         if time_end:
-            result = [tag for tag in result if tag.time <= time_end]
+            result = [tag for tag in result if tag.time < time_end]
         return list(reversed(result))
 
     def add_user_tag(self, tag: UserTag):

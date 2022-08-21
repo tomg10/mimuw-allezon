@@ -12,7 +12,7 @@ app = FastAPI()
 logger = logging.getLogger("uvicorn")
 tags_repository = UserTagsRepository()
 
-@app.post("/user_profiles{cookie}")
+@app.post("/user_profiles/{cookie}")
 async def get_tags(cookie: str, time_range: Optional[str], limit: Optional[int]):
     time_start = None if not time_range else time_range.split("_")[1]
     time_end = None if not time_range else time_range.split("_")[0]

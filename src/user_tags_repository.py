@@ -21,7 +21,8 @@ class UserTagsRepository:
                                 f"{product_info.category_id}|" \
                                 f"{tag.time}|" \
                                 f"{tag.device}|" \
-                                f"{tag.country}"
+                                f"{tag.country}|" \
+                                f"{tag.origin}"
             result.append(serialized_action)
         return ''.join(result)
 
@@ -36,11 +37,12 @@ class UserTagsRepository:
                                        brand_id=parameters[2],
                                        category_id=parameters[3])
             tag = UserTag(action=action,
-                             time=parameters[4],
-                             device=parameters[5],
-                             country=parameters[6],
-                             product_info=product_info,
-                             cookie=cookie)
+                          time=parameters[4],
+                          device=parameters[5],
+                          country=parameters[6],
+                          origin=parameters[7],
+                          product_info=product_info,
+                          cookie=cookie)
             result.append(tag)
         return result
 
@@ -70,5 +72,3 @@ class UserTagsRepository:
                 current_tags = current_tags[:199]
                 current_tags.append(tag)
                 self.redis.set(f"user|{tag.cookie}|{tag.action}", self._serialize_tags(tags=current_tags))
-
-

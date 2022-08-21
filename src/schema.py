@@ -15,6 +15,7 @@ class UserTag(BaseModel):
     country: str
     device: str
     action: str
+    origin: str
     product_info: ProductInfo
 
 class UserProfile(BaseModel):

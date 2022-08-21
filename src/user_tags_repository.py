@@ -70,5 +70,6 @@ class UserTagsRepository:
             else:
                 current_tags = self.get_user_tags(cookie=tag.cookie, action=tag.action)
                 current_tags = current_tags[:199]
+                current_tags = sorted(current_tags, key=lambda x: x.time)
                 current_tags.append(tag)
                 self.redis.set(f"user|{tag.cookie}|{tag.action}", self._serialize_tags(tags=current_tags))

@@ -1,3 +1,5 @@
+from typing import List
+
 from pydantic import BaseModel
 
 
@@ -15,3 +17,7 @@ class UserTag(BaseModel):
     action: str
     product_info: ProductInfo
 
+class UserProfile(BaseModel):
+    cookie: str
+    views: List[UserTag]
+    buys: List[UserTag]

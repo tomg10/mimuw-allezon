@@ -1,5 +1,5 @@
 import logging
-from typing import Union, Optional, Callable
+from typing import Union, Optional, Callable, List
 
 from fastapi import FastAPI
 from fastapi.routing import APIRoute
@@ -10,12 +10,15 @@ from starlette.status import HTTP_204_NO_CONTENT
 from starlette.types import Message
 
 from schema import UserTag, UserProfile
+from aggregates_repository import AggregatesRepository
 from user_tags_repository import UserTagsRepository
 
 app = FastAPI()
 
 logger = logging.getLogger("uvicorn")
 tags_repository = UserTagsRepository()
+aggregates_repository = AggregatesRepository()
+
 
 @app.post("/user_profiles/{cookie}")
 async def get_tags(cookie: str, time_range: Optional[str], limit: Optional[int]):
@@ -30,4 +33,14 @@ async def get_tags(cookie: str, time_range: Optional[str], limit: Optional[int])
 @app.post("/user_tags", status_code=HTTP_204_NO_CONTENT)
 async def add_tag(user_tag: UserTag):
     tags_repository.add_user_tag(tag=user_tag)
+    #aggregates_repository.add_user_tag(tag=user_tag)
 
+
+# @app.post("/aggregates")
+# async def get_aggregates(time_range: str,
+#                          action: str,
+#                          brand_id: Optional[str],
+#                          category_id: Optional[str],
+#                          origin: Optional[str], aggregates: List[str]):
+#     pass
+#     # aggregates = aggregates_repository.get_aggregations()

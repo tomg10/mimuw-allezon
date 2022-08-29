@@ -14,6 +14,6 @@ WORKDIR /mimuw-allezon
 
 RUN pip install -r requirements.txt
 
-WORKDIR /mimuw-allezon/src
+WORKDIR /mimuw-allezon
 
 CMD  uvicorn main_app:app --workers 2 --host 0.0.0.0 --port 8080

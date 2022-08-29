@@ -22,3 +22,7 @@ class UserProfile(BaseModel):
     cookie: str
     views: List[UserTag]
     buys: List[UserTag]
+
+class SingleBucket(BaseModel):
+    bucket_id: int
+    value: int

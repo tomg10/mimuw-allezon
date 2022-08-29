@@ -1,3 +1,4 @@
+import os
 import random
 from typing import List, Optional
 
@@ -9,7 +10,7 @@ from schema import UserTag, ProductInfo
 class UserTagsRepository:
 
     def __init__(self):
-        self.redis = redis.Redis(host='localhost', port=6778, db=0)
+        self.redis = redis.Redis(host=os.environ.get("ALLEZON_REDIS_HOST", "localhost") , port=6778, db=0)
 
     def _serialize_tags(self, tags: List[UserTag]) -> str:
         result = []

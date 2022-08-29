@@ -37,13 +37,14 @@ def single_worker_read(cookie_id):
 
 
 def generate_tag(cookie: str, action: str) -> UserTag:
-    product_info = ProductInfo(product_id=str(uuid.uuid4()),
-                               price=int(123),
+    product_info = ProductInfo(product_id=123,
+                               price=123,
                                brand_id=str(uuid.uuid4()),
                                category_id=str(uuid.uuid4()))
     user_action = UserTag(product_info=product_info,
                           cookie=cookie,
                           action=action,
+                          origin=str(uuid.uuid4()),
                           country=str(uuid.uuid4()),
                           device=str(uuid.uuid4()),
                           time=str(datetime.datetime.now()))
@@ -70,7 +71,7 @@ if __name__ == '__main__':
     # print(request.content)
     # print(request.status_code)
     # print(json.dumps(json.loads(content), indent=4))
-    workers_count = 30
+    workers_count = 5
     with Pool(workers_count) as p:
         elapsed1 = p.map(single_worker_write, [i for i in range(workers_count)])
 

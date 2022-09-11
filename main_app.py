@@ -10,14 +10,14 @@ from starlette.status import HTTP_204_NO_CONTENT
 from starlette.types import Message
 
 from schema import UserTag, UserProfile
-from aggregates_repository import AggregatesRepository
+# from aggregates_repository import AggregatesRepository
 from user_tags_repository import UserTagsRepository
 
 app = FastAPI()
 
 logger = logging.getLogger("uvicorn")
 tags_repository = UserTagsRepository()
-aggregates_repository = AggregatesRepository()
+# aggregates_repository = AggregatesRepository()
 
 
 @app.post("/user_profiles/{cookie}")

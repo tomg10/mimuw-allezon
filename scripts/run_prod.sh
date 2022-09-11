@@ -1,7 +1,7 @@
 
-docker stop allezon-redis || true
-docker rm allezon-redis || true
-docker run --name allezon-redis -p 6778:6778  -d redis redis-server --appendonly yes --save "" --port 6778
+#docker stop allezon-redis || true
+#docker rm allezon-redis || true
+#docker run --name allezon-redis -p 6778:6778  -d redis redis-server --appendonly yes --save "" --port 6778
 
 docker build . -t allezon
 docker stop allezon-backend || true

@@ -16,4 +16,6 @@ RUN pip install -r requirements.txt
 
 WORKDIR /mimuw-allezon
 
+ENV ALLEZON_REDIS_HOST=st123@st123vm102.rtb-lab.pl
+
 CMD  uvicorn main_app:app --workers 2 --host 0.0.0.0 --port 8080
